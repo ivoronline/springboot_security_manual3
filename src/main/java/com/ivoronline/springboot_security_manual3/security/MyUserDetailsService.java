@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -17,23 +18,31 @@ public class MyUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String enteredUsername) throws UsernameNotFoundException {
 
-    //HARD CODED STORED USER
-    String storedUsername = "myuser";
-    String storedPassword = "myuserpassword";
-    String role           = "ROLE_USER";
+    //-----------------------------------------------------------------------------------------------
+    //MOCK DB: <username, {"password", "ROLE"}>
+    HashMap<String, String[]> accounts = new HashMap<>();
+                              accounts.put("myuser" , new String[]{"myuserpassword" , "ROLE_USER" });
+                              accounts.put("myadmin", new String[]{"myadminpassword", "ROLE_ADMIN"});
+    //-----------------------------------------------------------------------------------------------
 
-    //FIND USER
-    if (!storedUsername.equals(enteredUsername)) { throw new UsernameNotFoundException(enteredUsername); }
+    //GET USER/ACCOUNT (From DB)
+    String[] account = accounts.get(enteredUsername);
 
-    //CREATE AUTHORITIES
-    List<GrantedAuthority> authorities = new ArrayList<>();
-                           authorities.add(new SimpleGrantedAuthority(role));
+    //CHECK IF USER EXISTS
+    if (account == null) { throw new UsernameNotFoundException(enteredUsername); }     //Bad credentials
+
+    //GET PASSWORD
+    String storedPassword = account[0];
+
+    //GET AUTHORITIES
+    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+                           authorities.add(new SimpleGrantedAuthority(account[1]));
 
     //CREATE USER DETAILS OBJECT
-    UserDetails userDetails = new User(storedUsername, storedPassword, authorities);
+    UserDetails userDetails = new User(enteredUsername, storedPassword, authorities);
 
-    //RETURN USER
-    return userDetails;
+    //RETURN USER DETAILS OBJECT
+    return userDetails ;
 
   }
 
