@@ -1,4 +1,4 @@
-package com.ivoronline.springboot_security_manual3.security;
+package com.ivoronline.springboot_security_manual3.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

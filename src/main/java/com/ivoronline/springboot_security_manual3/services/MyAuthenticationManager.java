@@ -1,6 +1,5 @@
-package com.ivoronline.springboot_security_manual3.security;
+package com.ivoronline.springboot_security_manual3.services;
 
-import ch.qos.logback.classic.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

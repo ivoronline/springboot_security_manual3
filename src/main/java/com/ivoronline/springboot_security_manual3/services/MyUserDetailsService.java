@@ -1,4 +1,4 @@
-package com.ivoronline.springboot_security_manual3.security;
+package com.ivoronline.springboot_security_manual3.services;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,7 +29,7 @@ public class MyUserDetailsService implements UserDetailsService {
     String[] account = accounts.get(enteredUsername);
 
     //CHECK IF USER EXISTS
-    if (account == null) { throw new UsernameNotFoundException(enteredUsername); }     //Bad credentials
+    if (account == null) { throw new UsernameNotFoundException(enteredUsername); } //Bad credentials
 
     //GET PASSWORD
     String storedPassword = account[0];
